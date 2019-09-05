@@ -6,12 +6,13 @@ from player import Player
 class Game(object):
 
     def __init__(self):
-
         # Config
         self.tps = 60.0
 
         # Init
         pygame.init()
+        self.window_width = 1280
+        self.window_height = 720
         self.screen = pygame.display.set_mode((1280, 720))
         self.tps_clock = pygame.time.Clock()
         self.tps_dt = 0.0
@@ -40,7 +41,7 @@ class Game(object):
             pygame.display.flip()
 
     def tick(self):
-        pass
+        self.player.tick()
 
     def draw(self):
         self.player.draw()
