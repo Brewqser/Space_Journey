@@ -9,12 +9,14 @@ class Player(object):
         self.game = game
 
         win_size = self.game.screen.get_size()
+
+        #Player
+        self.points = [Vector2(0, -20), Vector2(10, 10), Vector2(0, 4), Vector2(-10, 10)]
         self.pos = Vector2(win_size[0] / 2, win_size[1] / 2)
         self.vel = Vector2(0, 0)
         self.acc = Vector2(0, 0)
         self.angle = 180
 
-        print(self.pos)
         self.speed = 0.55
         self.drag = 0.98
 
@@ -51,13 +53,14 @@ class Player(object):
         self.pos.y %= win_size[1]
 
     def draw(self):
-        # Player
-        points = [Vector2(0, -10), Vector2(5, 5), Vector2(0, 2), Vector2(-5, 5)]
+
+        poi = self.points
 
         # Rotation
-        points = [p.rotate(self.angle) for p in points]
-        points = [Vector2(p.x, p.y * -1) for p in points]
+        poi = [p.rotate(self.angle) for p in poi]
+        poi = [Vector2(p.x, p.y * -1) for p in poi]
 
         # Update position
-        points = [self.pos + p * 2 for p in points]
-        pygame.draw.polygon(self.game.screen, (250, 0, 0), points)
+        poi = [self.pos + p for p in poi]
+
+        pygame.draw.polygon(self.game.screen, (250, 0, 0), poi)
