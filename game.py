@@ -1,6 +1,7 @@
 import pygame
 import sys
 from player import Player
+from asteroid import Asteroid
 
 
 class Game(object):
@@ -16,6 +17,7 @@ class Game(object):
         self.tps_dt = 0.0
 
         self.player = Player(self)
+        self.asteroid = Asteroid(self,1)
 
         while True:
 
@@ -40,7 +42,9 @@ class Game(object):
 
     def tick(self):
         self.player.tick()
+        self.asteroid.tic()
 
     def draw(self):
         self.player.draw()
+        self.asteroid.draw()
 

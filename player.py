@@ -10,7 +10,7 @@ class Player(object):
 
         win_size = self.game.screen.get_size()
 
-        #Player
+        # Player Data
         self.points = [Vector2(0, -20), Vector2(10, 10), Vector2(0, 4), Vector2(-10, 10)]
         self.pos = Vector2(win_size[0] / 2, win_size[1] / 2)
         self.vel = Vector2(0, 0)
@@ -63,4 +63,4 @@ class Player(object):
         # Update position
         poi = [self.pos + p for p in poi]
 
-        pygame.draw.polygon(self.game.screen, (250, 0, 0), poi)
+        pygame.draw.polygon(self.game.screen, (255, 255, 0), poi)
