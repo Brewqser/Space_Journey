@@ -59,11 +59,19 @@ class Asteroid(object):
         self.angle = 0
         self.rot = random.randint(-1, 1)
 
-    def tic(self):
+    def tick(self):
 
         # Physic
         self.pos += self.vel
         self.angle += self.rot
+
+        win_size = self.game.screen.get_size()
+        if self.pos.x > 100 + win_size[0] or self.pos.x < -100:
+            return 0
+        if self.pos.y > 100 + win_size[1] or self.pos.y< -100:
+            return 0
+
+        return 1
 
     def draw(self):
         poi = self.points

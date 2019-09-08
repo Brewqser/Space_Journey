@@ -17,8 +17,9 @@ class Game(object):
         self.tps_dt = 0.0
 
         self.player = Player(self)
-        self.asteroid = Asteroid(self,1)
-
+        self.asteroids = []
+        self.asteroid_spawn = 60 # asteroida co 60 tick
+        self.asteroid_spawn_count = 0
         while True:
 
             # Events
@@ -34,6 +35,10 @@ class Game(object):
             while self.tps_dt > 1 / self.tps:
                 self.tps_dt -= 1 / self.tps
                 self.tick()
+                self.asteroid_spawn_count += 1
+                if self.asteroid_spawn_count == 60:
+                    self.asteroid_spawn_count = 0
+                    self.asteroids.append(Asteroid(self, 1))
 
             # Render
             self.screen.fill((0, 0, 0))
@@ -42,9 +47,18 @@ class Game(object):
 
     def tick(self):
         self.player.tick()
-        self.asteroid.tic()
+        # self.asteroid.tic()
+        a = 0
+        for asteroid in self.asteroids:
+            a += 1
+            if not asteroid.tick():
+                self.asteroids.remove(asteroid)
+
+        print(a)
 
     def draw(self):
         self.player.draw()
-        self.asteroid.draw()
+        # self.asteroid.draw()
+        for asteroid in self.asteroids:
+            asteroid.draw()
 
