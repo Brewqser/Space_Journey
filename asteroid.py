@@ -68,7 +68,7 @@ class Asteroid(object):
         win_size = self.game.screen.get_size()
         if self.pos.x > 100 + win_size[0] or self.pos.x < -100:
             return 0
-        if self.pos.y > 100 + win_size[1] or self.pos.y< -100:
+        if self.pos.y > 100 + win_size[1] or self.pos.y < -100:
             return 0
 
         return 1

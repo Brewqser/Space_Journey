@@ -1,7 +1,7 @@
 import pygame
 from pygame import Vector2
 from math import sin, cos, pi
-
+from projectile import Projectile
 
 class Player(object):
 
