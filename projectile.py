@@ -29,6 +29,6 @@ class Projectile(object):
             return 0
 
         return 1
-    
+
     def draw(self):
         pygame.draw.line(self.game.screen, (0, 0, 255), self.pos, self.last_pos, 4)

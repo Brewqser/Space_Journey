@@ -21,9 +21,11 @@ class Game(object):
         self.projectiles = []
         self.asteroids = []
 
-        self.asteroid_spawn = 60 # asteroida co 60 tick
-        self.asteroid_spawn_count =59 # zmienić !!!!!
-        while True:
+        self.asteroid_spawn = 60  # asteroida co 60 tick
+        self.asteroid_spawn_count = 58
+
+        self.running = True
+        while self.running:
 
             # Events
             for event in pygame.event.get():
@@ -53,20 +55,28 @@ class Game(object):
 
     def tick(self):
         self.player.tick()
-        # self.asteroid.tic()
-        a = 0
-        b = 0
         for asteroid in self.asteroids:
-            a += 1
             if not asteroid.tick():
                 self.asteroids.remove(asteroid)
 
         for projectile in self.projectiles:
-            b += 1
             if not projectile.tick():
                 self.projectiles.remove(projectile)
 
-        print(a, b)
+        for asteroid in self.asteroids:
+            if self.running:
+                self.running = not asteroid.collision1(self.player)
+
+        for asteroid in self.asteroids:
+            for projectile in self.projectiles:
+                if asteroid.collision2(projectile):
+                    if asteroid.size >= 4:
+                        self.asteroids.append(Asteroid(self, 1, False, asteroid.pos, asteroid.size / 2))
+                        self.asteroids.append(Asteroid(self, 1, False, asteroid.pos, asteroid.size / 2))
+                    self.asteroids.remove(asteroid)
+                    self.projectiles.remove(projectile)
+
+        print("-" * 20)
 
     def draw(self):
         for projectile in self.projectiles:
@@ -74,5 +84,3 @@ class Game(object):
         for asteroid in self.asteroids:
             asteroid.draw()
         self.player.draw()
-
-

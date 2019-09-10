@@ -5,8 +5,8 @@ from math import sin, cos, pi
 import numpy as np
 
 
-def make_points():
-    size = random.randint(3, 5) * 10
+def make_points(size):
+
     poi = [Vector2(cos(a/2) * size, sin(a/2) * size) for a in range(0, 12, 1)]
     poi = [p + Vector2(random.randint(-7, 7), random.randint(-7, 7)) for p in poi]
     return poi
@@ -47,17 +47,26 @@ def make_pos(vel,win_size):
 
 class Asteroid(object):
 
-    def __init__(self, game,max_vel):
+    def __init__(self, game, max_vel, new=True, pos=Vector2(0, 0), size=0):
         self.game = game
 
         win_size = self.game.screen.get_size()
 
         # Asteroid Data
-        self.points = make_points()
-        self.vel = make_vel(max_vel)
-        self.pos = make_pos(self.vel, win_size)
-        self.angle = 0
-        self.rot = random.randint(-1, 1)
+        if new:
+            self.size = random.randint(3, 5) * 10
+            self.points = make_points(self.size)
+            self.vel = make_vel(max_vel)
+            self.pos = make_pos(self.vel, win_size)
+            self.angle = 0
+            self.rot = random.randint(-1, 1)
+        else:
+            self.size = size
+            self.points = make_points(self.size)
+            self.vel = make_vel(max_vel)
+            self.pos = pos
+            self.angle = 0
+            self.rot = random.randint(-1, 1)
 
     def tick(self):
 
@@ -84,3 +93,15 @@ class Asteroid(object):
         poi = [self.pos + p for p in poi]
 
         pygame.draw.polygon(self.game.screen, (255, 255, 255), poi)
+
+    def collision1(self, player):
+        tmp = Vector2(self.pos - player.pos).magnitude()
+        if int(tmp) < self.size:
+            return True
+        return False
+
+    def collision2(self, projectile):
+        tmp = Vector2(self.pos - projectile.pos).magnitude()
+        if int(tmp) < self.size:
+            return True
+        return False
