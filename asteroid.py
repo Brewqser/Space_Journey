@@ -13,8 +13,9 @@ def make_points(size):
 
 
 def make_vel(max_vel):
-    angle = random.randint(0,359)
+    angle = random.randint(0, 719)
     rad_ang = angle * pi / 180
+    print(rad_ang)
 
     vel = Vector2(max_vel * sin(rad_ang), max_vel * cos(rad_ang))
     return vel
@@ -63,7 +64,7 @@ class Asteroid(object):
         else:
             self.size = size
             self.points = make_points(self.size)
-            self.vel = make_vel(max_vel)
+            self.vel = make_vel(max_vel * 2)
             self.pos = pos
             self.angle = 0
             self.rot = random.randint(-1, 1)
@@ -71,6 +72,7 @@ class Asteroid(object):
     def tick(self):
 
         # Physic
+        print(self.vel)
         self.pos += self.vel
         self.angle += self.rot
 

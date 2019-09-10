@@ -1,5 +1,6 @@
 import pygame
 import sys
+from pygame import Vector2
 from player import Player
 from asteroid import Asteroid
 from projectile import Projectile
@@ -23,6 +24,9 @@ class Game(object):
 
         self.asteroid_spawn = 60  # asteroida co 60 tick
         self.asteroid_spawn_count = 58
+
+        self.score = 0
+        self.font = pygame.font.SysFont("comicsansms", 72)
 
         self.running = True
         while self.running:
@@ -70,13 +74,14 @@ class Game(object):
         for asteroid in self.asteroids:
             for projectile in self.projectiles:
                 if asteroid.collision2(projectile):
-                    if asteroid.size >= 4:
-                        self.asteroids.append(Asteroid(self, 1, False, asteroid.pos, asteroid.size / 2))
-                        self.asteroids.append(Asteroid(self, 1, False, asteroid.pos, asteroid.size / 2))
+                    if asteroid.size >= 30:
+                        self.score += 1
+                        self.asteroids.append(Asteroid(self, 1, False, Vector2(asteroid.pos), asteroid.size / 2))
+                        self.asteroids.append(Asteroid(self, 1, False, Vector2(asteroid.pos), asteroid.size / 2))
                     self.asteroids.remove(asteroid)
                     self.projectiles.remove(projectile)
 
-        print("-" * 20)
+        print(len(self.asteroids))
 
     def draw(self):
         for projectile in self.projectiles:
@@ -84,3 +89,6 @@ class Game(object):
         for asteroid in self.asteroids:
             asteroid.draw()
         self.player.draw()
+
+        text = self.font.render(str(self.score), True, (0, 128, 0))
+        self.screen.blit(text, (0, 0))
